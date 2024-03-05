@@ -9,5 +9,5 @@ import { NavBarComponent } from './02.components/nav-bar/nav-bar.component';
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  title = 'bonamy_antoine_BA3';
+  title = 'Atomic Fusion Hub';
 }
