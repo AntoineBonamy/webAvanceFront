@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApiService } from '../../03.services/api.service';
+import { CardComponent } from '../card/card.component';
+import { IArticle } from '../../04.interface/iarticle';
 import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-articles',
   standalone: true,
-  imports: [NgFor],
+  imports: [CardComponent, NgFor],
   templateUrl: './articles.component.html'
 })
-export class ArticlesComponent implements OnInit {
+export class ArticlesComponent implements OnInit, OnDestroy {
 
   constructor(private servicesService: ApiService) { }
 
-  public articles: any[] = [];
+  public articles: IArticle[] = [];
 
   ngOnInit(): void {
     this.loadArticles();
@@ -20,14 +22,23 @@ export class ArticlesComponent implements OnInit {
 
   loadArticles() {
     this.servicesService.getArticles().subscribe(
-      {next: (data) => {
-        this.articles = data;
-        console.log(this.articles);
-        
-      },
-      error: (err) => {
-        console.error("Erreur lors du chargement des articles :", err);
-      }}
+      {
+        next: (data) => {
+          this.articles = data;
+
+        },
+        error: (err) => {
+          console.error("Erreur lors du chargement des articles :", err);
+        }
+      }
     )
+  }
+  ngOnDestroy(): void {
+
+  }
+
+  addToCard(article: IArticle) {
+    console.log("Ajouté : ", article);
+    
   }
 }

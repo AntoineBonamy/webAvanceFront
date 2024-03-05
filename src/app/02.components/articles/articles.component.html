@@ -1,10 +1,5 @@
-<main class="grid grid-cols-4 gap-5 p-10 bg-slate-700">
-    <div class="bg-lime-500 rounded-xl flex flex-col p-5 items-center" *ngFor="let article of articles">
-        <h3 class="font-bold text-2xl">{{ article.Name }}</h3>
-        <img [src]= "article['Closet Image']" alt="">
-        <div>
-            <p>Prix : {{article.Buy}}</p>
-            <p>{{article['Seasonal Availability']}}</p>
-        </div>
+<main class="flex flex-wrap justify-center gap-5 p-10 bg-slate-700" >
+    <div *ngFor="let article of articles">
+        <app-card [article]="article" (addToCardClik)="addToCard($event)"></app-card>
     </div>
 </main>
