@@ -15,9 +15,19 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   constructor(private servicesService: ApiService) { }
 
   public articles: IArticle[] = [];
+  public basket: IArticle[] = [];
 
   ngOnInit(): void {
     this.loadArticles();
+
+    const stockedBasket = localStorage.getItem("panier");
+    if (stockedBasket) {
+      const parsedBasket = JSON.parse(stockedBasket)
+
+      parsedBasket.map((el: IArticle) => {
+        this.basket.push(el)
+      })
+    }
   }
 
   loadArticles() {
@@ -39,6 +49,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
 
   addToCard(article: IArticle) {
     console.log("Ajouté : ", article);
-    
+    this.basket.push(article);
+    localStorage.setItem("panier", JSON.stringify(this.basket))
   }
 }
